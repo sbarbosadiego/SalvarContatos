@@ -42,6 +42,9 @@ public class ViewMain extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableContatos = new javax.swing.JTable();
+        btnAdicionar = new javax.swing.JButton();
+        btnLimpar = new javax.swing.JButton();
+        btnRemover = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItemImportar = new javax.swing.JMenuItem();
@@ -67,6 +70,17 @@ public class ViewMain extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(jTableContatos);
+
+        btnAdicionar.setText("Adicionar");
+        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarActionPerformed(evt);
+            }
+        });
+
+        btnLimpar.setText("Limpar");
+
+        btnRemover.setText("Remover");
 
         jMenu1.setText("Arquivo");
 
@@ -144,7 +158,14 @@ public class ViewMain extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -152,6 +173,11 @@ public class ViewMain extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAdicionar)
+                    .addComponent(btnLimpar)
+                    .addComponent(btnRemover))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -236,6 +262,29 @@ public class ViewMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItemSalvarContatosActionPerformed
 
+    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+        DefaultTableModel tabela = (DefaultTableModel) jTableContatos.getModel();
+
+        if (tabela.getRowCount() == 0) {
+            tabela.setNumRows(0);
+            int contador = 1;
+            String nomeCliente = "";
+            String linha = "";
+
+            for (int c = 0; c < contador; c++) {
+                tabela.addRow(new Object[]{
+                    nomeCliente,
+                    linha
+                });
+            }
+        } else {
+            tabela.getRowCount();
+            
+        }
+
+
+    }//GEN-LAST:event_btnAdicionarActionPerformed
+
     /**
      * Método para importar o arquivo CSV com os telefones, automaticamente é
      * preenchido o nome do contato como "Cliente" com uma ordem númerica em
@@ -248,7 +297,7 @@ public class ViewMain extends javax.swing.JFrame {
 
         // Limpar a tabela antes de adicionar novas informações
         tabela.setNumRows(0);
-        
+
         // Uso de try-with-resources, garante que seja fechado os recursos, sem a necessidade de usar um método como close para cada um.
         try (FileInputStream fileInputStream = new FileInputStream(path); InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream); BufferedReader bufferedReader = new BufferedReader(inputStreamReader);) {
 
@@ -257,7 +306,9 @@ public class ViewMain extends javax.swing.JFrame {
 
             while ((linha = bufferedReader.readLine()) != null) {
                 String nomeCliente = "Cliente " + contadorCliente;
-                tabela.addRow(new Object[]{nomeCliente, linha.trim()});
+                tabela.addRow(new Object[]{
+                    nomeCliente,
+                    linha.trim()});
                 contadorCliente++;
             }
 
@@ -274,24 +325,22 @@ public class ViewMain extends javax.swing.JFrame {
      */
     public void ExportarContatos(File path) {
         DefaultTableModel tabela = (DefaultTableModel) jTableContatos.getModel();
-        int rowCount = tabela.getRowCount();
-        
+        int contador = tabela.getRowCount();
+
         /* Em importar contatos poderia ser feito sem o uso de try-with-resources, porém em exportar é necessário,
         ** caso contrário o arquivo ficará em "edição" e ao fechar a aplicação para abrir, nada vai ter sido salvo
-        */
+         */
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(path));) {
             writer.write("Name;Mobile Phone");
             writer.newLine();
 
-            for (int i = 0; i < rowCount; i++) {
+            for (int i = 0; i < contador; i++) {
                 String nome = tabela.getValueAt(i, 0).toString();
                 String telefone = tabela.getValueAt(i, 1).toString();
 
                 writer.write(nome + ";" + telefone);
                 writer.newLine();
             }
-
-            System.out.println("Contatos exportados com sucesso para: " + path);
 
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -302,7 +351,7 @@ public class ViewMain extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
+
         FlatIntelliJLaf.setup();
 
         /* Create and display the form */
@@ -314,6 +363,9 @@ public class ViewMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdicionar;
+    private javax.swing.JButton btnLimpar;
+    private javax.swing.JButton btnRemover;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
