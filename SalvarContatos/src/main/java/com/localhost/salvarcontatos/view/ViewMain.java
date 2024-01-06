@@ -61,6 +61,7 @@ public class ViewMain extends javax.swing.JFrame {
         setTitle("Salvar Contatos");
         setResizable(false);
 
+        jTableContatos.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jTableContatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -79,6 +80,11 @@ public class ViewMain extends javax.swing.JFrame {
         });
 
         btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
 
         btnRemover.setText("Remover");
 
@@ -278,12 +284,25 @@ public class ViewMain extends javax.swing.JFrame {
                 });
             }
         } else {
-            tabela.getRowCount();
-            
+            int contador = tabela.getRowCount();
+            String nomeCliente = "";
+            String linha = "";
+
+            for (int c = 0; c < contador; c++) {
+                tabela.addRow(new Object[]{
+                    nomeCliente,
+                    linha
+                });
+            }
+
         }
 
-
     }//GEN-LAST:event_btnAdicionarActionPerformed
+
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        DefaultTableModel tabela = (DefaultTableModel) jTableContatos.getModel();
+        tabela.setNumRows(0);
+    }//GEN-LAST:event_btnLimparActionPerformed
 
     /**
      * Método para importar o arquivo CSV com os telefones, automaticamente é
