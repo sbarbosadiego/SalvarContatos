@@ -72,6 +72,7 @@ public class ViewMain extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTableContatos);
 
+        btnAdicionar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnAdicionar.setText("Adicionar");
         btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -79,6 +80,7 @@ public class ViewMain extends javax.swing.JFrame {
             }
         });
 
+        btnLimpar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnLimpar.setText("Limpar");
         btnLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,10 +88,19 @@ public class ViewMain extends javax.swing.JFrame {
             }
         });
 
+        btnRemover.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnRemover.setText("Remover");
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
+            }
+        });
+
+        jMenuBar1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
         jMenu1.setText("Arquivo");
 
+        jMenuItemImportar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuItemImportar.setText("Importar");
         jMenuItemImportar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,6 +109,7 @@ public class ViewMain extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItemImportar);
 
+        jMenuItemExportar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuItemExportar.setText("Exportar");
         jMenuItemExportar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,6 +118,7 @@ public class ViewMain extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItemExportar);
 
+        jMenuItemExtrairContatos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuItemExtrairContatos.setText("Extrair Contatos");
         jMenuItemExtrairContatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,6 +127,7 @@ public class ViewMain extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItemExtrairContatos);
 
+        jMenuItemSalvarContatos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuItemSalvarContatos.setText("Salvar Contatos");
         jMenuItemSalvarContatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,6 +140,7 @@ public class ViewMain extends javax.swing.JFrame {
 
         jMenu3.setText("Opções");
 
+        menuModoEscuro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         menuModoEscuro.setText("Modo Escuro");
         menuModoEscuro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,6 +153,7 @@ public class ViewMain extends javax.swing.JFrame {
 
         jMenu2.setText("Sobre");
 
+        jMenuItemGithub.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuItemGithub.setText("Github");
         jMenuItemGithub.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -146,6 +162,7 @@ public class ViewMain extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItemGithub);
 
+        jMenuItemLinkedin.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuItemLinkedin.setText("LinkedIn");
         jMenuItemLinkedin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -303,6 +320,12 @@ public class ViewMain extends javax.swing.JFrame {
         DefaultTableModel tabela = (DefaultTableModel) jTableContatos.getModel();
         tabela.setNumRows(0);
     }//GEN-LAST:event_btnLimparActionPerformed
+
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+        DefaultTableModel tabela = (DefaultTableModel) jTableContatos.getModel();
+        int linha = jTableContatos.getSelectedRow();
+        tabela.removeRow(linha);
+    }//GEN-LAST:event_btnRemoverActionPerformed
 
     /**
      * Método para importar o arquivo CSV com os telefones, automaticamente é
